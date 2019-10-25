@@ -54,26 +54,26 @@ foreach f ( $TEST_NUM )
 	set NAMEO = ${BASE}o.csh
 	set NAMEM = ${BASE}m.csh
 	if      ( $BUILDS[$COUNT] == som ) then
-		echo "date ; ./single.csh > output_$NUM ; date " >> $name
+		echo "date ; ./single.csh > output_$f ; date " >> $name
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEO > outo & " >> $name
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
-		echo "cat SERIAL outs OPENMP outo MPI outm >> output_$NUM" >> $name
-		echo "date ; ./last_only_once.csh >> output_$NUM ; date" >> $name
+		echo "cat SERIAL outs OPENMP outo MPI outm >> output_$f" >> $name
+		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outs outo outm " >> $name
 	else if ( $BUILDS[$COUNT] == sm ) then
-		echo "date ; ./single.csh > output_$NUM ; date " >> $name
+		echo "date ; ./single.csh > output_$f ; date " >> $name
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
-		echo "cat SERIAL outs MPI outm >> output_$NUM" >> $name
-		echo "date ; ./last_only_once.csh >> output_$NUM ; date" >> $name
+		echo "cat SERIAL outs MPI outm >> output_$f" >> $name
+		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outs outm " >> $name
 	else if ( $BUILDS[$COUNT] == s ) then
-		echo "date ; ( ./single.csh ; ./$NAMES & wait ) > output_$NUM ; date " >> $name
+		echo "date ; ( ./single.csh ; ./$NAMES & wait ) > output_$f ; date " >> $name
 	else if ( $BUILDS[$COUNT] == m ) then
-		echo "date ; ( ./single.csh ; ./$NAMEM & wait ) > output_$NUM ; date " >> $name
+		echo "date ; ( ./single.csh ; ./$NAMEM & wait ) > output_$f ; date " >> $name
 	endif
 
 	echo "rm SERIAL OPENMP MPI " >> $name

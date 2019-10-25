@@ -21,6 +21,6 @@ echo "==============================================================" >> MPI
 echo "                         MPI START" >> MPI
 echo "==============================================================" >> MPI
 
-date ; ( ./single.csh ; ./test_010s.csh & wait ) > output_010 ; date 
+date ; ( ./single.csh ; ./test_010s.csh & wait ) > output_10 ; date 
 rm SERIAL OPENMP MPI 
 EOF

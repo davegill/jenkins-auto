@@ -21,13 +21,13 @@ echo "==============================================================" >> MPI
 echo "                         MPI START" >> MPI
 echo "==============================================================" >> MPI
 
-date ; ./single.csh > output_007 ; date 
+date ; ./single.csh > output_7 ; date 
 ./test_007s.csh > outs & 
 ./test_007o.csh > outo & 
 ./test_007m.csh > outm & 
 wait 
-cat SERIAL outs OPENMP outo MPI outm >> output_007
-date ; ./last_only_once.csh >> output_007 ; date
+cat SERIAL outs OPENMP outo MPI outm >> output_7
+date ; ./last_only_once.csh >> output_7 ; date
 rm outs outo outm 
 rm SERIAL OPENMP MPI 
 EOF
