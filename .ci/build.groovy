@@ -62,7 +62,7 @@ def terraformStage(stageName){
             sh"""
             echo $i
             sudo -S sed -i "3i export GIT_URL=$repo_url\\nexport GIT_BRANCH=$fork_branchName" $WORKSPACE/$BUILD_NUMBER/WRF/.ci/terraform/wrf_testcase_"$i".sh
-            sudo -S sed -i "12i cd /home/ubuntu/ && bash my_script.sh output_00"$i" $BUILD_NUMBER" $WORKSPACE/$BUILD_NUMBER/WRF/.ci/terraform/wrf_testcase_"$i".sh
+            sudo -S sed -i "12i cd /home/ubuntu/ && bash my_script.sh output_"$i" $BUILD_NUMBER" $WORKSPACE/$BUILD_NUMBER/WRF/.ci/terraform/wrf_testcase_"$i".sh
             """
             }
             sh """
