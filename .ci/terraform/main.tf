@@ -5,7 +5,7 @@ provider "aws" {
 
 //Run number of test case based on count value: "default = 10" means run all ten builds
 variable "instance_count" {
- default = 10
+ default = 2
 }
 
 variable "hostnames" {
