@@ -310,12 +310,12 @@ pipeline {
 
     post {
     success {
-        echo "Job is successfull. Now sending e-mail notification and cleaning workspace"
+        echo "Job is successful. Now sending e-mail notification and cleaning workspace"
         sh """
         curl "https://api.GitHub.com/repos/davegill/WRF/statuses/$sha?access_token=$token" \
         -H "Content-Type: application/json" \
         -X POST \
-        -d '{"state": "success","context": "WRF-BUILD/jenkins", "description": "WRF test build is successfull", "target_url": "http://scala-jenkins-1810560854.us-east-1.elb.amazonaws.com/job/wrf_test_case/$BUILD_NUMBER/console"}'
+        -d '{"state": "success","context": "WRF-BUILD/jenkins", "description": "WRF test build is successful", "target_url": "http://scala-jenkins-1810560854.us-east-1.elb.amazonaws.com/job/wrf_test_case/$BUILD_NUMBER/console"}'
         """
         emailext attachmentsPattern: 'wrf_output.zip', 
         body: 'WRF build test ran successfully. Please find the attachment of the output for WRF BUILD '+ env.BUILD_NUMBER, 
