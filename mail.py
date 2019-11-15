@@ -20,10 +20,10 @@ RECIPIENTS  = ['hkumar@scalacomputing.com',RECEPIENT]
 HOST = "email-smtp.us-west-2.amazonaws.com"
 PORT = 587
 # Replace smtp_username with your Amazon SES SMTP user name.
-USERNAME_SMTP = "AKIASZKFYIAYHCVH4Z7R"
+USERNAME_SMTP = sys.argv[6]
 
 # Replace smtp_password with your Amazon SES SMTP password.
-PASSWORD_SMTP = "BKMg2wevIwGLH0nuoOI8SD9qEUOIbqXWTMF7NfWZIRzu"
+PASSWORD_SMTP = sys.argv[7]
 
 #Pass HTML Body
 HTML_BODY_PASS="""
