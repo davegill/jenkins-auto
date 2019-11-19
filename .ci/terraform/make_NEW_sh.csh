@@ -22,7 +22,7 @@ foreach f ( $TEST_NUM )
 	echo "git clone git@github.com:davegill/wrf-coop.git" >> $name
 	echo "cd wrf-coop/" >> $name
 	echo 'sed -e "s^_GIT_URL_^$GIT_URL^" -e "s/_GIT_BRANCH_/$GIT_BRANCH/" Dockerfile-sed > Dockerfile' >> $name
-	echo "csh build.csh /home/ubuntu/wrf-stuff/ /home/ubuntu/wrf-stuff/" >> $name
+	echo "csh build.csh /home/ubuntu/wrf-stuff/wrf-coop /home/ubuntu/wrf-stuff/wrf-coop" >> $name
 
 	echo 'echo "==============================================================" >  SERIAL' >> $name
 	echo 'echo "==============================================================" >> SERIAL' >> $name
@@ -53,8 +53,8 @@ foreach f ( $TEST_NUM )
 	set NAMES = ${BASE}s.csh
 	set NAMEO = ${BASE}o.csh
 	set NAMEM = ${BASE}m.csh
+	echo "date ; ./single.csh > output_$f ; date " >> $name
 	if      ( $BUILDS[$COUNT] == som ) then
-		echo "date ; ./single.csh > output_$f ; date " >> $name
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEO > outo & " >> $name
 		echo "./$NAMEM > outm & " >> $name
@@ -63,7 +63,6 @@ foreach f ( $TEST_NUM )
 		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outs outo outm " >> $name
 	else if ( $BUILDS[$COUNT] == sm ) then
-		echo "date ; ./single.csh > output_$f ; date " >> $name
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
@@ -71,9 +70,17 @@ foreach f ( $TEST_NUM )
 		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outs outm " >> $name
 	else if ( $BUILDS[$COUNT] == s ) then
-		echo "date ; ( ./single.csh ; ./$NAMES & wait ) > output_$f ; date " >> $name
+		echo "./$NAMES > outs & " >> $name
+		echo "wait " >> $name
+		echo "cat SERIAL outs >> output_$f" >> $name
+		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
+		echo "rm outs " >> $name
 	else if ( $BUILDS[$COUNT] == m ) then
-		echo "date ; ( ./single.csh ; ./$NAMEM & wait ) > output_$f ; date " >> $name
+		echo "./$NAMEM > outm & " >> $name
+		echo "wait " >> $name
+		echo "cat MPI outm >> output_$f" >> $name
+		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
+		echo "rm outm " >> $name
 	endif
 
 	echo "rm SERIAL OPENMP MPI " >> $name
