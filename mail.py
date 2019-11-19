@@ -7,6 +7,7 @@ import datetime
 from os.path import basename
 from email import encoders
 import sys
+import os
 
 #Setting command line arguments
 SENDER = 'no-reply-jenkins@scalacomputing.com'
@@ -20,10 +21,10 @@ RECIPIENTS  = ['hkumar@scalacomputing.com',RECEPIENT]
 HOST = "email-smtp.us-west-2.amazonaws.com"
 PORT = 587
 # Replace smtp_username with your Amazon SES SMTP user name.
-USERNAME_SMTP = sys.argv[6]
+USERNAME_SMTP = os.environ["USERNAME_SMTP"]
 
 # Replace smtp_password with your Amazon SES SMTP password.
-PASSWORD_SMTP = sys.argv[7]
+PASSWORD_SMTP = os.environ["PASSWORD_SMTP"]
 
 #Pass HTML Body
 HTML_BODY_PASS="""
