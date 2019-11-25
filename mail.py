@@ -1,40 +1,35 @@
-import smtplib
-import email.utils
+import os
+import boto3
+from botocore.exceptions import ClientError
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-import datetime
-from os.path import basename
-from email import encoders
+from email.mime.application import MIMEApplication
 import sys
 import os
-
-#Setting command line arguments
-SENDER = 'no-reply-jenkins@scalacomputing.com'
+SENDER = 'jenkins@no-reply.scalacomputing.com'
 SENDERNAME = 'no-reply-jenkins'
 FILE_NAME = sys.argv[1]
 BUILD_STATUS=sys.argv[2]
 JOB_NAME=sys.argv[3]
 BUILD_NUMBER=sys.argv[4]
-RECEPIENT=sys.argv[5]
-RECIPIENTS  = ['hkumar@scalacomputing.com',RECEPIENT]
-HOST = "email-smtp.us-west-2.amazonaws.com"
-PORT = 587
-# Replace smtp_username with your Amazon SES SMTP user name.
-USERNAME_SMTP = os.environ["USERNAME_SMTP"]
-
-# Replace smtp_password with your Amazon SES SMTP password.
-PASSWORD_SMTP = os.environ["PASSWORD_SMTP"]
-
+RECIPIENT=sys.argv[5]
+COMMIT_ID=sys.argv[6]
+REQUESTOR=sys.argv[7]
+PULLNUMBER=sys.argv[8]
+AWS_REGION = "us-east-1"
+# The subject line for the email.
+#Subject Line
+SUBJECT =("{}-{}-{}").format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
 #Pass HTML Body
 HTML_BODY_PASS="""
 <html>
 <head></head>
 <body>
   <h1>{}: {}-BUILD-{}</h1>
-	<p>Please find result of the test cases in the attachment. For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill</a></p>
+	<p>Please find result of the test cases in the attachment.This build is for Commit ID: {}, requested by: {} for PR number: {}.
+        For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill</a></p>
 </body>
-</html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
+</html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,COMMIT_ID,REQUESTOR,PULLNUMBER)
 
 #Fail/Aborted HTML Body
 HTML_BODY_FAIL="""
@@ -42,63 +37,68 @@ HTML_BODY_FAIL="""
 <head></head>
 <body>
   <h1>{}: {}-BUILD-{}</h1>
- <p>This WRF-Model build has {}. For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill</a></p>
+ <p>This WRF-Model build has {}. This build is for Commit ID: {}, requested by: {} for PR number: {}.
+    For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill</a></p>
 </body>
-</html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,BUILD_STATUS)
+</html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,BUILD_STATUS,COMMIT_ID,REQUESTOR,PULLNUMBER)
 
-#Subject Line
-SUBJECT =("{}-{}-{}").format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
+# The full path to the file that will be attached to the email.
+ATTACHMENT = FILE_NAME
+CHARSET = "utf-8"
+client = boto3.client('ses',region_name=AWS_REGION)
+msg = MIMEMultipart('mixed')
+# Add subject, from and to lines.
+msg['Subject'] = SUBJECT
+msg['From'] = SENDER
+msg['To'] = RECIPIENT
 if (BUILD_STATUS=="SUCCESS"):
-	BODY_TEXT=HTML_BODY_PASS
-        # Create message container - the correct MIME type is multipart/alternative.
-    	msg = MIMEMultipart('alternative')
-    	msg['Subject'] = SUBJECT
-    	msg['From'] = email.utils.formataddr((SENDERNAME, SENDER))
-    	msg['To'] = ', '.join(RECIPIENTS)
-    	part1 = MIMEText(BODY_TEXT, 'html')
-    	msg.attach(part1)
-    	attach_file = open(FILE_NAME, 'rb')
-    	payload = MIMEBase('application', 'octate-stream')
-    	payload.set_payload((attach_file).read())
-    	encoders.encode_base64(payload)
-    	payload.add_header('Content-Disposition','attachment; filename="{}"'.format(FILE_NAME.rsplit("/",1)[1]))
-    	msg.attach(payload)
-elif(BUILD_STATUS=="FAILURE"):
-	BODY_TEXT=HTML_BODY_FAIL
- 	# Create message container - the correct MIME type is multipart/alternative.
-    	msg = MIMEMultipart('alternative')
-    	msg['Subject'] = SUBJECT
-    	msg['From'] = email.utils.formataddr((SENDERNAME, SENDER))
-    	msg['To'] = ', '.join(RECIPIENTS)
-    	part1 = MIMEText(BODY_TEXT, 'html')
-    	msg.attach(part1)
-    	payload = MIMEBase('application', 'octate-stream')
-    	encoders.encode_base64(payload)
-    	msg.attach(payload)
-elif(BUILD_STATUS=="ABORTED"):
-	BODY_TEXT=HTML_BODY_FAIL
-    	# Create message container - the correct MIME type is multipart/alternative.
-    	msg = MIMEMultipart('alternative')
-    	msg['Subject'] = SUBJECT
-	msg['From'] = email.utils.formataddr((SENDERNAME, SENDER))
-    	msg['To'] = ', '.join(RECIPIENTS)
-    	part1 = MIMEText(BODY_TEXT, 'html')
-    	msg.attach(part1)
-    	payload = MIMEBase('application', 'octate-stream')
-    	encoders.encode_base64(payload)
-    	msg.attach(payload)
-for idx,RECIPIENT in enumerate(RECIPIENTS):
-# Try to send the the message.
+    msg_body = MIMEMultipart('alternative')
+    htmlpart = MIMEText(HTML_BODY_PASS.encode(CHARSET), 'html', CHARSET)
+    msg_body.attach(htmlpart)
+    # Define the attachment part and encode it using MIMEApplication.
+    att = MIMEApplication(open(ATTACHMENT, 'rb').read())
+    att.add_header('Content-Disposition','attachment',filename=os.path.basename(ATTACHMENT))
+    msg.attach(msg_body)
+
+    # Add the attachment to the parent container.
+    msg.attach(att)
     try:
-        server = smtplib.SMTP(HOST, PORT)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login(USERNAME_SMTP, PASSWORD_SMTP)
-        server.sendmail(SENDER, RECIPIENTS[idx], msg.as_string())
-        server.close()
-    # Display an error message if something goes wrong.
-    except Exception as e:
-        print ("Error: ", e)
+        #Provide the contents of the email.
+        response = client.send_raw_email(
+            Source=SENDER,
+            Destinations=[
+                RECIPIENT
+            ],
+            RawMessage={
+                'Data':msg.as_string(),
+            },
+        )
+    # Display an error if something goes wrong.
+    except ClientError as e:
+        print(e.response['Error']['Message'])
     else:
-        print ("Email sent successfully to {},{}").format("hkumar@scalacomputing.com",RECEPIENT)
+        print("Email sent! Message ID:"),
+        print(response['MessageId'])
+if (BUILD_STATUS=="FAILURE"):
+    msg_body = MIMEMultipart('alternative')
+    htmlpart = MIMEText(HTML_BODY_FAIL.encode(CHARSET), 'html', CHARSET)
+    msg_body.attach(htmlpart)
+    # Define the attachment part and encode it using MIMEApplication.
+    msg.attach(msg_body)
+    try:
+        #Provide the contents of the email.
+        response = client.send_raw_email(
+            Source=SENDER,
+            Destinations=[
+                RECIPIENT
+            ],
+            RawMessage={
+                'Data':msg.as_string(),
+            },
+        )
+    # Display an error if something goes wrong.
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print("Email sent! Message ID:"),
+        print(response['MessageId'])
