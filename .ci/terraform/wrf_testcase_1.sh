@@ -1,5 +1,6 @@
 #!/bin/bash
 su - ubuntu << 'EOF'
+wget https://wrf-testcase.s3.amazonaws.com/my_script.sh
 mkdir /home/ubuntu/wrf-stuff
 cd wrf-stuff/
 git clone git@github.com:davegill/wrf-coop.git
