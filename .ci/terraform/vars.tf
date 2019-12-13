@@ -12,7 +12,7 @@ variable "region" {
 # EC2 variables
 
 variable "instance_name"               { default = "wrf-test" }
-variable "ami"                         { default = "ami-085679d969c25b558" }
+variable "ami"                         { default = "ami-04d346e0166f9ea65" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
 variable "instance_type"               { default = "c5.2xlarge" }
