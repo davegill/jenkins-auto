@@ -17,6 +17,7 @@ COMMIT_ID=sys.argv[6]
 REQUESTOR=sys.argv[7]
 PULLNUMBER=sys.argv[8]
 AWS_REGION = "us-east-1"
+DAVID_GILL="dave@ucar.edu"
 # The subject line for the email.
 #Subject Line
 SUBJECT =("{}-{}-{}").format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
@@ -26,7 +27,7 @@ HTML_BODY_PASS="""
 <head></head>
 <body>
   <h1>{}: {}-BUILD-{}</h1>
-	<p>Please find result of the test cases in the attachment.This build is for Commit ID: {}, requested by: {} for PR number: {}.
+	<p>Please find result of the WRF regression test cases in the attachment.This build is for Commit ID: {}, requested by: {} for PR number: {}.
         For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill</a></p>
 </body>
 </html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,COMMIT_ID,REQUESTOR,PULLNUMBER)
@@ -67,7 +68,7 @@ if (BUILD_STATUS=="SUCCESS"):
         response = client.send_raw_email(
             Source=SENDER,
             Destinations=[
-                RECIPIENT
+                RECIPIENT,DAVID_GILL
             ],
             RawMessage={
                 'Data':msg.as_string(),
@@ -90,7 +91,7 @@ if (BUILD_STATUS=="FAILURE"):
         response = client.send_raw_email(
             Source=SENDER,
             Destinations=[
-                RECIPIENT
+                RECIPIENT,DAVID_GILL
             ],
             RawMessage={
                 'Data':msg.as_string(),
