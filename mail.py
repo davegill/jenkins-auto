@@ -18,6 +18,7 @@ REQUESTOR=sys.argv[7]
 PULLNUMBER=sys.argv[8]
 AWS_REGION = "us-east-1"
 DAVID_GILL="dave@ucar.edu"
+HEMANT="hemant.kumar@svam.com"
 # The subject line for the email.
 #Subject Line
 SUBJECT =("{}-{}-{}").format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
@@ -68,7 +69,7 @@ if (BUILD_STATUS=="SUCCESS"):
         response = client.send_raw_email(
             Source=SENDER,
             Destinations=[
-                RECIPIENT,DAVID_GILL
+                RECIPIENT,DAVID_GILL,HEMANT
             ],
             RawMessage={
                 'Data':msg.as_string(),
@@ -91,7 +92,7 @@ if (BUILD_STATUS=="FAILURE"):
         response = client.send_raw_email(
             Source=SENDER,
             Destinations=[
-                RECIPIENT,DAVID_GILL
+                RECIPIENT,DAVID_GILL,HEMANT
             ],
             RawMessage={
                 'Data':msg.as_string(),
