@@ -28,7 +28,7 @@ HTML_BODY_PASS="""
 <head></head>
 <body>
   <h1>{}: {}-BUILD-{}</h1>
-	<p>Please find result of the WRF regression test cases in the attachment.This build is for Commit ID: {}, requested by: {} for PR number: {}.
+	<p>Please find result of the WRF regression test cases in the attachment.This build is for Commit ID: {}, requested by: {} for PR: https://github.com/wrf-model/WRF/pull/{}.
         For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill</a></p>
 </body>
 </html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,COMMIT_ID,REQUESTOR,PULLNUMBER)
@@ -39,7 +39,7 @@ HTML_BODY_FAIL="""
 <head></head>
 <body>
   <h1>{}: {}-BUILD-{}</h1>
- <p>This WRF-Model build has {}. This build is for Commit ID: {}, requested by: {} for PR number: {}.
+ <p>This WRF-Model build has {}. This build is for Commit ID: {}, requested by: {} for PR: https://github.com/wrf-model/WRF/pull/{}.
     For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill</a></p>
 </body>
 </html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,BUILD_STATUS,COMMIT_ID,REQUESTOR,PULLNUMBER)
