@@ -7,6 +7,14 @@ variable "region" {
   description = "Region for launching subnets"
   default     = "us-east-1"
 }
+variable "volumesize" {
+  default = 15
+}
+variable "devicename" {
+  default = "/dev/sda1"
+}
+
+
 
 
 # EC2 variables

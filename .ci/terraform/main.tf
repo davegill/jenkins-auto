@@ -20,6 +20,10 @@ data "template_file" "user-data" {
 resource "aws_instance" "application" {
   count                         = "${var.instance_count}"
   ami                           = "${var.ami}"
+   ebs_block_device             = {
+         device_name = "${var.devicename}"
+         volume_size = "${var.volumesize}"
+                                    }
   availability_zone             = "${var.availability_zone}"
   ebs_optimized                 = "${var.ebs_optimized}"
   instance_type                 = "${var.instance_type}"
