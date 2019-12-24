@@ -16,12 +16,16 @@ RECIPIENT=sys.argv[5]
 COMMIT_ID=sys.argv[6]
 REQUESTOR=sys.argv[7]
 PULLNUMBER=sys.argv[8]
+FILE=sys.argv[9]
 AWS_REGION = "us-east-1"
 DAVID_GILL="dave@ucar.edu"
 HEMANT="hemant.kumar@svam.com"
 # The subject line for the email.
 #Subject Line
 SUBJECT =("{}-{}-{}").format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
+f = open(FILE,"r")
+contents=f.read()
+print(contents)
 #Pass HTML Body
 HTML_BODY_PASS="""
 <html>
@@ -30,8 +34,9 @@ HTML_BODY_PASS="""
   <h1>{}: {}-BUILD-{}</h1>
 	<p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {}, requested by: {} for PR: https://github.com/wrf-model/WRF/pull/{}.
         For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill. </a></p>
+<pre>{}</pre>
 </body>
-</html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,COMMIT_ID,REQUESTOR,PULLNUMBER)
+</html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,COMMIT_ID,REQUESTOR,PULLNUMBER,contents)
 
 #Fail/Aborted HTML Body
 HTML_BODY_FAIL="""
