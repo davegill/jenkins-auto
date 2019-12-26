@@ -3,7 +3,7 @@
 #	This script makes the wrf_testcase_xx.sh files.
 
 set TEST_NUM = (  1   2   3   4   5   6   7   8   9  10 )
-set BUILDS   = ( som sm  sm  som som som som  m  som  s )
+set BUILDS   = ( som  m  sm  som som som som  m  som  s )
 
 
 set COUNT = 1
@@ -17,6 +17,7 @@ foreach f ( $TEST_NUM )
 		
 	echo '#\!/bin/bash' >> $name
 	echo "su - ubuntu << 'EOF'" >> $name
+	echo "wget https://wrf-testcase.s3.amazonaws.com/my_script.sh" >> $name
 	echo "mkdir /home/ubuntu/wrf-stuff" >> $name
 	echo "cd wrf-stuff/" >> $name
 	echo "git clone git@github.com:davegill/wrf-coop.git" >> $name
