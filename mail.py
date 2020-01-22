@@ -6,6 +6,8 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 import sys
 import os
+
+#Variables 
 SENDER = 'jenkins@no-reply.scalacomputing.com'
 SENDERNAME = 'no-reply-jenkins'
 FILE_NAME = sys.argv[1]
@@ -20,6 +22,7 @@ FILE=sys.argv[9]
 AWS_REGION = "us-east-1"
 DAVID_GILL="dave@ucar.edu"
 HEMANT="hemant.kumar@svam.com"
+
 # The subject line for the email.
 #Subject Line
 SUBJECT =("{}-{}-{}").format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
