@@ -20,7 +20,7 @@ variable "devicename" {
 # EC2 variables
 
 variable "instance_name"               { default = "wrf-test" }
-variable "ami"                         { default = "ami-001a6c81a612d18dd" }
+variable "ami"                         { default = "ami-0838bf870e82b31b5" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
 variable "instance_type"               { default = "c5.2xlarge" }
