@@ -25,32 +25,61 @@ G=sys.argv[13]
 H=sys.argv[14]
 I=sys.argv[15]
 J=sys.argv[16]
+K=sys.argv[17]
+L=sys.argv[18]
 AWS_REGION = "us-east-1"
 DAVID_GILL="dave@ucar.edu"
 HEMANT="hemant.kumar@svam.com"
-
-#Subject Line
-SUBJECT =("WRF Jenkins {} {} {} {}").format(BUILD_STATUS,REQUESTOR,PULLNUMBER,PRCOMMENT)
 f = open(FILE,"r")
 contents=f.read()
 print(contents)
-#Pass HTML Body
-HTML_BODY_PASS="""
-<html>
-<head></head>
-<body>
-<p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {}, requested by: {} for PR: https://github.com/wrf-model/WRF/pull/{}.
-        For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill. </a></p>
-<pre>
-Test Type              | Expected  | Received |  Failed
- = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
- Number of Tests        : 10           {}
- Number of Builds       : 23           {}
- Number of Simulations  : 65           {}         {}
- Number of Comparisons  : 39           {}         {}
-</pre>
-</body>
-</html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J)
+
+#If either I or J is non-zero, then the title of the email message uses the word FAIL. 
+#If both I and J are zero, then the title of the email message uses the word PASS.
+if (I=="0") and (J=="0"):
+    SUBJECT =("WRF Jenkins-PASS {} {} {}").format(REQUESTOR,PULLNUMBER,PRCOMMENT)
+    #Pass HTML Body
+    HTML_BODY_PASS="""
+    <html>
+    <head></head>
+    <body>
+    <p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {0}, requested by: {1} for PR: https://github.com/wrf-model/WRF/pull/{2}.
+            For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill. </a></p>
+    <pre>
+    Test Type              | Expected  | Received |  Failed
+    = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
+    Number of Tests        : 10           {3}
+    Number of Builds       : 23           {4}
+    Number of Simulations  : 65           {5}        {7}
+    Number of Comparisons  : 39           {6}        {8}
+
+    Failed Simulations are: {9}
+    Which comparisons are not bit-for-bit: {10}
+    </pre>
+    </body>
+    </html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J,K,L)
+else :
+    SUBJECT =("WRF Jenkins-FAIL {} {} {}").format(REQUESTOR,PULLNUMBER,PRCOMMENT)
+    #Pass HTML Body
+    HTML_BODY_PASS="""
+    <html>
+    <head></head>
+    <body>
+    <p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {0}, requested by: {1} for PR: https://github.com/wrf-model/WRF/pull/{2}.
+            For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill. </a></p>
+    <pre>
+    Test Type              | Expected  | Received |  Failed
+    = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
+    Number of Tests        : 10           {3}
+    Number of Builds       : 23           {4}
+    Number of Simulations  : 65           {5}         {7}
+    Number of Comparisons  : 39           {6}         {8}
+
+    Failed Simulations are: {9}
+    Which comparisons are not bit-for-bit: {10}
+    </pre>
+    </body>
+    </html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J,K,L)
 
 #Fail/Aborted HTML Body
 HTML_BODY_FAIL="""
