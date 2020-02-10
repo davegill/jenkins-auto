@@ -5,9 +5,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 import sys
-import os
 
-#Variables 
+#Variables
 SENDER = 'jenkins@no-reply.scalacomputing.com'
 SENDERNAME = 'no-reply-jenkins'
 FILE_NAME = sys.argv[1]
@@ -19,13 +18,19 @@ COMMIT_ID=sys.argv[6]
 REQUESTOR=sys.argv[7]
 PULLNUMBER=sys.argv[8]
 FILE=sys.argv[9]
+PRCOMMENT=sys.argv[10]
+E=sys.argv[11]
+F=sys.argv[12]
+G=sys.argv[13]
+H=sys.argv[14]
+I=sys.argv[15]
+J=sys.argv[16]
 AWS_REGION = "us-east-1"
 DAVID_GILL="dave@ucar.edu"
 HEMANT="hemant.kumar@svam.com"
 
-# The subject line for the email.
 #Subject Line
-SUBJECT =("{}-{}-{}").format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER)
+SUBJECT =("WRF Jenkins {} {} {} {}").format(BUILD_STATUS,REQUESTOR,PULLNUMBER,PRCOMMENT)
 f = open(FILE,"r")
 contents=f.read()
 print(contents)
@@ -34,12 +39,18 @@ HTML_BODY_PASS="""
 <html>
 <head></head>
 <body>
-  <h1>{}: {}-BUILD-{}</h1>
-	<p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {}, requested by: {} for PR: https://github.com/wrf-model/WRF/pull/{}.
+<p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {}, requested by: {} for PR: https://github.com/wrf-model/WRF/pull/{}.
         For any query please send e-mail to <a href="mailto:gill@ucar.edu">David Gill. </a></p>
-<pre>{}</pre>
+<pre>
+Test Type              | Expected  | Received |  Failed
+ = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
+ Number of Tests        : 10           {}
+ Number of Builds       : 23           {}
+ Number of Simulations  : 65           {}         {}
+ Number of Comparisons  : 39           {}         {}
+</pre>
 </body>
-</html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,COMMIT_ID,REQUESTOR,PULLNUMBER,contents)
+</html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J)
 
 #Fail/Aborted HTML Body
 HTML_BODY_FAIL="""

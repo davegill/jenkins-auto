@@ -76,7 +76,7 @@ Func to check if instane with current tag is running or not
 ***/
 def Instanceflag() {
     instanceId="""
-    aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --filters Name=instance-state-name,Values=running  "Name=tag:Name,Values=wrf-test-$BUILD_NUMBER" --region us-east-1
+    sudo -S aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --filters Name=instance-state-name,Values=running  "Name=tag:Name,Values=wrf-test-$BUILD_NUMBER" --region us-east-1
     """
     instance=sh(script: instanceId, returnStdout: true)
     def running
@@ -96,17 +96,15 @@ def killall_jobs() {
     def buildnum = env.BUILD_NUMBER.toInteger()
     echo "${buildnum}"
     echo "From kill all jobs"
+    echo "${jobname}"
     def rmi = """
-    sudo -S rm -rf $WORKSPACE/$BUILD_NUMBER
+    sudo -S mkdir -p $WORKSPACE/$BUILD_NUMBER/WRF
+    echo "Cloning repo into:   $WORKSPACE/$BUILD_NUMBER/WRF "
+    sudo -S git clone https://github.com/davegill/jenkins-auto.git $WORKSPACE/$BUILD_NUMBER/WRF   
     """
     rm=sh(script: rmi,returnStdout: true)
-    echo "${jobname}"
     def job = Jenkins.instance.getItemByFullName(jobname)
     println("Kill task because commits have been found in .md and .txt files for buildNumber or either action is other than open/synchronise")
-    println(job.builds.get(0))
-    job.builds.get(0).doStop()
-    
-        
 }
 
 //Run any shell script with this function
@@ -166,10 +164,10 @@ pipeline {
         
         //Github status for current build
         sh """
-           curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
+           curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
            -H "Content-Type: application/json" \
            -X POST \
-           -d '{"state": "pending","context": "WRF-BUILD/jenkins", "description": "WRF test build running", "target_url": "http://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
+           -d '{"state": "pending","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test running", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
         """
             
             def sh1="""
@@ -218,13 +216,6 @@ pipeline {
             cd $WORKSPACE/$BUILD_NUMBER && cat sample.json | jq '.pull_request.user.login'
             """
             env.githubuserName=mysh(sh11)  // Github UserName
-            
-            //Email ID of user submitting the pull request
-            def sh12= """
-            curl -s https://api.github.com/users/$githubuserName/events/public| jq ".[].payload.commits[0].author"|grep "email"|awk '{print \$2}'|head -1|cut -d',' -f1 | tr -d '"'
-
-            """
-            
             //Cloning the forked repository
             
             sh """
@@ -235,6 +226,10 @@ pipeline {
              cd $WORKSPACE/$BUILD_NUMBER/forked_repo && git rev-parse HEAD
             """
             env.commitID=mysh(sh8)
+            //Email ID of user submitting the pull request
+            def sh12= """
+            cd $WORKSPACE/$BUILD_NUMBER/forked_repo && git --no-pager show -s --format='%ae' $commitID
+            """
             env.eMailID=mysh(sh12)
             println("Commit ID is")
             println(commitID)
@@ -252,8 +247,9 @@ pipeline {
             echo "fork_repo_$BUILD_NUMBER"
             echo "Pull number is: $pullnumber"
             def sh9="""
-            curl -s https://patch-diff.githubusercontent.com/raw/davegill/WRF/pull/${pullnumber}.diff|grep "diff --git a"| awk '{print \$3}'| cut -d '/' -f2-
+            curl -s https://patch-diff.githubusercontent.com/raw/wrf-model/WRF/pull/${pullnumber}.patch| grep -i "SUBJECT"|tail -n 1
             """
+            env.prComment=mysh(sh9)
             println("Checking for list of file changes in this commit")
             def sh13="""
             cd $WORKSPACE/$BUILD_NUMBER/forked_repo 
@@ -267,14 +263,8 @@ pipeline {
             if(bool ==true){
             println("Entering if condition")
             killall_jobs()
-            println("#######################################")
-            println("            Job is aborted                      ")
-            println("#######################################")
-            def sh10="""
-            echo "Cleaning : $WORKSPACE/$BUILD_NUMBER
-            sudo -S rm -rf $WORKSPACE/$BUILD_NUMBER
-            mysh(sh10)
-            """
+            currentBuild.result = 'ABORTED'
+            
             }
             /*
             Check for action is open/sycnhronise and continue the build job
@@ -300,9 +290,8 @@ pipeline {
             else{
                 println("Entering else condition because neither commits have been found in .md/.txt files and action is not equal to open/synchronise")
                 killall_jobs()
-                println("#######################################")
-                println("            Job is aborted                      ")
-                println("#######################################")
+                currentBuild.result = 'ABORTED'
+                error('Stopping early…')
                  }
                 
                 }    
@@ -312,32 +301,60 @@ pipeline {
 
     post {
     success {
-        echo "Job is successfull. Now sending e-mail notification and cleaning workspace"
+        script{
+        /*
+        Setting some more variables for test results
+        */
+        env.E=mysh("""cd $WORKSPACE/$BUILD_NUMBER/output_testcase && ls -1 | grep output_ | wc -l""")
+        env.F=mysh("""cd $WORKSPACE/$BUILD_NUMBER/output_testcase && grep -a " START" output_* | grep -av "CLEAN START" | grep -av "SIMULATION START" | grep -av "LOG START" | wc -l""")
+        env.G=mysh("""cd $WORKSPACE/$BUILD_NUMBER/output_testcase && grep -a " = STATUS" output_* | wc -l""")
+        env.H=mysh("""cd $WORKSPACE/$BUILD_NUMBER/output_testcase && grep -a "status = " output_* | wc -l""")
+        env.I=mysh("""cd $WORKSPACE/$BUILD_NUMBER/output_testcase && grep -a " = STATUS" output_* | grep -av "0 = STATUS" | wc -l""")
+        env.J=mysh("""cd $WORKSPACE/$BUILD_NUMBER/output_testcase && grep -a "status = " output_* | grep -av "status = 0" | wc -l """)
+        
+        if ("""$eMailID"""){    
         sh """
-        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
+        echo "Job is successfull. Now sending e-mail notification and cleaning workspace"
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
         -H "Content-Type: application/json" \
         -X POST \
-        -d '{"state": "success","context": "WRF-BUILD/jenkins", "description": "WRF test build is successfull", "target_url": "http://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
+        -d '{"state": "success","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test is successfull", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
         echo "#############Job is Successfull############"
         echo "##############Sending E-Mail###############"
-        echo "Recipents are: hkumar@scalacomputing.com, $eMailID"
-        sudo -S python $WORKSPACE/$BUILD_NUMBER/WRF/mail.py $WORKSPACE/$BUILD_NUMBER/wrf_output.zip SUCCESS $JOB_NAME $BUILD_NUMBER  $eMailID
+        echo "Recipient is:$eMailID"
+        cd $WORKSPACE/$BUILD_NUMBER && sudo -S unzip $WORKSPACE/$BUILD_NUMBER/wrf_output.zip
+        sudo -S python $WORKSPACE/$BUILD_NUMBER/WRF/mail.py $WORKSPACE/$BUILD_NUMBER/wrf_output.zip SUCCESS $JOB_NAME $BUILD_NUMBER  $eMailID $commitID $githubuserName $pullnumber $WORKSPACE/$BUILD_NUMBER/output_testcase/email_01.txt "$prComment" $E $F $G $H $I $J
         echo "Cleaning workspace"
         sudo -S rm -rf $WORKSPACE/$BUILD_NUMBER
         """
+        }
+        else{
+        sh """
+        echo "Job is successfull. Now sending e-mail notification and cleaning workspace"
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
+        -H "Content-Type: application/json" \
+        -X POST \
+        -d '{"state": "success","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test is successfull", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
+        echo "#############Job is Successfull############"
+        echo "##############Sending E-Mail###############"
+        echo "Recipient is: gill@ucar.eduu"
+        cd $WORKSPACE/$BUILD_NUMBER && sudo -S unzip $WORKSPACE/$BUILD_NUMBER/wrf_output.zip
+        sudo -S python $WORKSPACE/$BUILD_NUMBER/WRF/mail.py $WORKSPACE/$BUILD_NUMBER/wrf_output.zip SUCCESS $JOB_NAME $BUILD_NUMBER gill@ucar.edu $commitID $githubuserName $pullnumber $WORKSPACE/$BUILD_NUMBER/output_testcase/email_01.txt "$prComment" $E $F $G $H $I $J
+        echo "Cleaning workspace"
+        sudo -S rm -rf $WORKSPACE/$BUILD_NUMBER
+        """    
+        }
+        }
         }
     failure{
         echo "Job failed. Now sending e-mail notification and cleaning workspace"
          
         sh """
-        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
         -H "Content-Type: application/json" \
         -X POST \
-        -d '{"state": "failure","context": "WRF-BUILD/jenkins", "description": "WRF test build failed", "target_url": "http://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
-        echo "#############Job Failed############"
-        echo "##############Sending E-Mail###############"
-        echo "Recipents are: hkumar@scalacomputing.com, $eMailID"
-        sudo -S python $WORKSPACE/$BUILD_NUMBER/WRF/mail.py $WORKSPACE/$BUILD_NUMBER/wrf_output.zip FAILURE $JOB_NAME $BUILD_NUMBER  $eMailID
+        -d '{"state": "failure","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test failed", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
+        echo "#############Job Failed############
         echo "Cleaning workspace"
         sudo -S rm -rf $WORKSPACE/$BUILD_NUMBER
         """
@@ -346,20 +363,14 @@ pipeline {
         echo "Job Aborted. Now sending e-mail notification and cleaning workspace"
          
         sh """
-        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
         -H "Content-Type: application/json" \
         -X POST \
-        -d '{"state": "success","context": "WRF-BUILD/jenkins", "description": "WRF test build aborted coz txt/.md based changes.", "target_url": "http://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
-        
+        -d '{"state": "success","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test is successfull", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
         echo "#############Job Aborted############"
-        echo "##############Sending E-Mail###############"
-        echo "Recipents are: hkumar@scalacomputing.com, $eMailID"
-        sudo -S python $WORKSPACE/$BUILD_NUMBER/WRF/mail.py $WORKSPACE/$BUILD_NUMBER/wrf_output.zip ABORTED $JOB_NAME $BUILD_NUMBER  $eMailID
         echo "Cleaning workspace"
         sudo -S rm -rf $WORKSPACE/$BUILD_NUMBER
         """
                 }   
             }
     }
-
-    
