@@ -164,7 +164,7 @@ pipeline {
         
         //Github status for current build
         sh """
-           curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
+           curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
            -H "Content-Type: application/json" \
            -X POST \
            -d '{"state": "pending","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test running", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
@@ -315,7 +315,7 @@ pipeline {
         if ("""$eMailID"""){    
         sh """
         echo "Job is successfull. Now sending e-mail notification and cleaning workspace"
-        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
         -H "Content-Type: application/json" \
         -X POST \
         -d '{"state": "success","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test is successfull", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
@@ -331,7 +331,7 @@ pipeline {
         else{
         sh """
         echo "Job is successfull. Now sending e-mail notification and cleaning workspace"
-        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
         -H "Content-Type: application/json" \
         -X POST \
         -d '{"state": "success","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test is successfull", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
@@ -350,7 +350,7 @@ pipeline {
         echo "Job failed. Now sending e-mail notification and cleaning workspace"
          
         sh """
-        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
         -H "Content-Type: application/json" \
         -X POST \
         -d '{"state": "failure","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test failed", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
@@ -363,7 +363,7 @@ pipeline {
         echo "Job Aborted. Now sending e-mail notification and cleaning workspace"
          
         sh """
-        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=2194a7c3c5fefe2b291fa87e6b489846641b0d7b" \
+        curl -s "https://api.GitHub.com/repos/wrf-model/WRF/statuses/$sha?access_token=$token" \
         -H "Content-Type: application/json" \
         -X POST \
         -d '{"state": "success","context": "WRF-BUILD-$BUILD_NUMBER", "description": "WRF regression test is successfull", "target_url": "https://ncar_jenkins.scalacomputing.com/job/WRF-MODEL-TEST/$BUILD_NUMBER/console"}'
