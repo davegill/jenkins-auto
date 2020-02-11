@@ -53,8 +53,10 @@ if (I=="0") and (J=="0"):
     Number of Simulations  : 65           {5}        {7}
     Number of Comparisons  : 39           {6}        {8}
 
-    Failed Simulations are: {9}
-    Which comparisons are not bit-for-bit: {10}
+    Failed Simulations are: 
+    {9}
+    Which comparisons are not bit-for-bit: 
+    {10}
     </pre>
     </body>
     </html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J,K,L)
