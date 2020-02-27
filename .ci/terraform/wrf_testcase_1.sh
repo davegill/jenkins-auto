@@ -23,7 +23,7 @@ echo "==============================================================" >> MPI
 echo "                         MPI START" >> MPI
 echo "==============================================================" >> MPI
 
-date ; ./single.csh > output_1 ; date 
+date ; ./single.csh Dockerfile     > output_1 ; date 
 ./test_001s.csh > outs & 
 ./test_001o.csh > outo & 
 ./test_001m.csh > outm & 
