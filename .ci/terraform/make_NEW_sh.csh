@@ -23,6 +23,7 @@ foreach f ( $TEST_NUM )
 	echo "git clone git@github.com:davegill/wrf-coop.git" >> $name
 	echo "cd wrf-coop/" >> $name
 	echo 'sed -e "s^_GIT_URL_^$GIT_URL^" -e "s/_GIT_BRANCH_/$GIT_BRANCH/" Dockerfile-sed > Dockerfile' >> $name
+	echo 'sed -e "s^_GIT_URL_^$GIT_URL^" -e "s/_GIT_BRANCH_/$GIT_BRANCH/" Dockerfile-sed-NMM > Dockerfile-NMM' >> $name
 	echo "csh build.csh /home/ubuntu/wrf-stuff/wrf-coop /home/ubuntu/wrf-stuff/wrf-coop" >> $name
 
 	echo 'echo "==============================================================" >  SERIAL' >> $name
@@ -54,7 +55,11 @@ foreach f ( $TEST_NUM )
 	set NAMES = ${BASE}s.csh
 	set NAMEO = ${BASE}o.csh
 	set NAMEM = ${BASE}m.csh
-	echo "date ; ./single.csh > output_$f ; date " >> $name
+	if ( $NUM == 002 ) then
+		echo "date ; ./single.csh Dockerfile-NMM > output_$f ; date " >> $name
+	else
+		echo "date ; ./single.csh Dockerfile     > output_$f ; date " >> $name
+	endif
 	if      ( $BUILDS[$COUNT] == som ) then
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEO > outo & " >> $name
