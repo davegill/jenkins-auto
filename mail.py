@@ -48,10 +48,10 @@ if (I=="0") and (J=="0"):
     <pre>
     Test Type              | Expected  | Received |  Failed
     = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
-    Number of Tests        : 10           {3}
-    Number of Builds       : 23           {4}
-    Number of Simulations  : 65           {5}        {7}
-    Number of Comparisons  : 39           {6}        {8}
+    Number of Tests        : {3}           {3}
+    Number of Builds       : {4}           {4}
+    Number of Simulations  : {5}           {5}        {7}
+    Number of Comparisons  : {6}           {6}        {8}
 
     Failed Simulations are: 
     {9}
