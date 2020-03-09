@@ -27,6 +27,11 @@ I=sys.argv[15]
 J=sys.argv[16]
 K=sys.argv[17]
 L=sys.argv[18]
+M=sys.argv[19]
+N=sys.argv[20]
+O=sys.argv[21]
+P=sys.argv[22]
+
 AWS_REGION = "us-east-1"
 DAVID_GILL="dave@ucar.edu"
 HEMANT="hemant.kumar@svam.com"
@@ -48,10 +53,10 @@ if (I=="0") and (J=="0"):
     <pre>
     Test Type              | Expected  | Received |  Failed
     = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
-    Number of Tests        : {3}           {3}
-    Number of Builds       : {4}           {4}
-    Number of Simulations  : {5}           {5}        {7}
-    Number of Comparisons  : {6}           {6}        {8}
+    Number of Tests        : {11}           {3}
+    Number of Builds       : {12}           {4}
+    Number of Simulations  : {13}           {5}        {7}
+    Number of Comparisons  : {14}           {6}        {8}
 
     Failed Simulations are: 
     {9}
@@ -59,7 +64,7 @@ if (I=="0") and (J=="0"):
     {10}
     </pre>
     </body>
-    </html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J,K,L)
+    </html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J,K,L,M,N,O,P)
 else :
     SUBJECT =("WRF Jenkins-FAIL {} {} {}").format(REQUESTOR,PULLNUMBER,PRCOMMENT)
     #Pass HTML Body
@@ -72,10 +77,10 @@ else :
     <pre>
     Test Type              | Expected  | Received |  Failed
     = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
-    Number of Tests        : {3}           {3}
-    Number of Builds       : {4}           {4}
-    Number of Simulations  : {5}          {5}         {7}
-    Number of Comparisons  : {6}          {6}         {8}
+    Number of Tests        : {11}           {3}
+    Number of Builds       : {12}           {4}
+    Number of Simulations  : {13}           {5}         {7}
+    Number of Comparisons  : {14}           {6}         {8}
 
     Failed Simulations are: 
     {9}
@@ -83,7 +88,7 @@ else :
     {10}
     </pre>
     </body>
-    </html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J,K,L)
+    </html>""".format(COMMIT_ID,REQUESTOR,PULLNUMBER,E,F,G,H,I,J,K,L,M,N,O,P)
 
 #Fail/Aborted HTML Body
 HTML_BODY_FAIL="""
