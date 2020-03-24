@@ -3,13 +3,13 @@ provider "aws" {
    profile    = "${var.aws_profile}" #.aws/credentials
    }
 
-//Run number of test case based on count value: "default = 10" means run all ten builds
+//Run number of test case based on count value: "default = 16" means run all sixteen builds
 variable "instance_count" {
- default = 10
+ default = 16
 }
 
 variable "hostnames" {
-   default = ["wrf_testcase_1.sh", "wrf_testcase_2.sh", "wrf_testcase_3.sh","wrf_testcase_4.sh","wrf_testcase_5.sh","wrf_testcase_6.sh","wrf_testcase_7.sh", "wrf_testcase_8.sh","wrf_testcase_9.sh","wrf_testcase_10.sh"]
+   default = ["wrf_testcase_1.sh", "wrf_testcase_2.sh", "wrf_testcase_3.sh","wrf_testcase_4.sh","wrf_testcase_5.sh","wrf_testcase_6.sh","wrf_testcase_7.sh", "wrf_testcase_8.sh","wrf_testcase_9.sh","wrf_testcase_10.sh","wrf_testcase_11.sh","wrf_testcase_12.sh","wrf_testcase_13.sh","wrf_testcase_14.sh","wrf_testcase_15.sh","wrf_testcase_16.sh"]
 }
 
 data "template_file" "user-data" {
