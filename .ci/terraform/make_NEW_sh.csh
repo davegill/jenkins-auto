@@ -2,8 +2,8 @@
 
 #	This script makes the wrf_testcase_xx.sh files.
 
-set TEST_NUM = (  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  )
-set BUILDS   = ( som  m  sm  som som som som  m  som  s  som som som som som som )
+set TEST_NUM = (  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  )
+set BUILDS   = ( som  m  sm  som som som som  m  som  s  som som som som som som som som )
 
 
 set COUNT = 1
@@ -91,5 +91,6 @@ foreach f ( $TEST_NUM )
 
 	echo "rm SERIAL OPENMP MPI " >> $name
 	echo "EOF" >> $name
+	chmod +x $name
 	@ COUNT ++
 end
