@@ -15,7 +15,7 @@ data "template_file" "user-data" {
 resource "aws_instance" "application" {
   count                         = "${var.instance_count}"
   ami                           = "${var.ami}"
-  iam_instance_profile          = "wrf_test"
+  iam_instance_profile          = "${var.instance_profile}"
   ebs_block_device              = {
      device_name = "${var.devicename}" 
      volume_size = "${var.volumesize}"
@@ -28,7 +28,6 @@ resource "aws_instance" "application" {
   vpc_security_group_ids        = ["${var.security_group_ids}"]
   subnet_id                     = "${var.subnet_id}"
   associate_public_ip_address   = "${var.associate_public_ip_address}"
-  iam_instance_profile          = "${var.iam_instance_profile}"
   user_data                     = "${element(data.template_file.user-data.*.rendered, count.index)}"
   tags                          = "${merge(var.tags, map("Name", format("%s", var.instance_name)))}"
 
