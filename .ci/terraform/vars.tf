@@ -21,7 +21,7 @@ variable "devicename" {
 //Run number of test case based on count value: "default = 18" means run all eighteen builds
 variable "instance_count" {default = 1 }
 variable "instance_name"               { default = "wrf-test" }
-variable "instance_profile"            { default = "wrf_test" }
+variable "instance_profile"            { default = "WRFS3Role" }
 variable "ami"                         { default = "ami-0133bb439aeabb280" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
