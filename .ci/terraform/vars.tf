@@ -19,9 +19,10 @@ variable "devicename" {
 
 # EC2 variables
 //Run number of test case based on count value: "default = 18" means run all eighteen builds
-variable "instance_count" {default = 19 }
+variable "instance_count" {default = 1 }
 variable "instance_name"               { default = "wrf-test" }
-variable "ami"                         { default = "ami-0838bf870e82b31b5" }
+variable "instance_profile"            { default = "wrf_test" }
+variable "ami"                         { default = "ami-0133bb439aeabb280" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
 variable "instance_type"               { default = "c5.2xlarge" }
