@@ -75,7 +75,7 @@ if __name__ == '__main__':
     title_ = sys.argv[3]
     text_ = sys.argv[4]
     attachments_ = None
-    if len(sys.argv) == 5:
+    if len(sys.argv) > 5:
         attachments_ = [sys.argv[5]]
     
     response_ = send_mail(sender_, recipients_, cc_, title_, text_, None, attachments_)
