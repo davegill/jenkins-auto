@@ -33,7 +33,7 @@ O=sys.argv[21]
 P=sys.argv[22]
 
 AWS_REGION = "us-east-1"
-DAVID_GILL="dave@ucar.edu"
+DAVID_GILL="gill@ucar.edu"
 VIKRAM="vjakhar@scalacomputing.com"
 SCALA="info@scalacomputing.com"
 f = open(FILE,"r")
