@@ -25,6 +25,7 @@ echo "==============================================================" >> MPI
 
 date ; ./single.csh Dockerfile     > output_3 ; date 
 ./test_003s.csh > outs & 
+wait
 ./test_003m.csh > outm & 
 wait 
 cat SERIAL outs MPI outm >> output_3
