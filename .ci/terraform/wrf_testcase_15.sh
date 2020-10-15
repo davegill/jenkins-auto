@@ -23,13 +23,12 @@ echo "==============================================================" >> MPI
 echo "                         MPI START" >> MPI
 echo "==============================================================" >> MPI
 
-date ; ./single.csh Dockerfile     > output_15 ; date 
+date ; ./single_init.csh Dockerfile     wrf_regtest    > output_15 ; date 
 ./test_015s.csh > outs & 
-wait
 ./test_015o.csh > outo & 
-wait
 ./test_015m.csh > outm & 
 wait 
+./single_end.csh wrf_regtest    >> output_15 ; date 
 cat SERIAL outs OPENMP outo MPI outm >> output_15
 date ; ./last_only_once.csh >> output_15 ; date
 rm outs outo outm 

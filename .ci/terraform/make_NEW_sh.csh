@@ -56,15 +56,20 @@ foreach f ( $TEST_NUM )
 	set NAMEO = ${BASE}o.csh
 	set NAMEM = ${BASE}m.csh
 	if ( $NUM == 002 ) then
-		echo "date ; ./single.csh Dockerfile-NMM > output_$f ; date " >> $name
+		echo "date ; ./single_init.csh Dockerfile-NMM wrf_nmmregtest > output_$f ; date " >> $name
 	else
-		echo "date ; ./single.csh Dockerfile     > output_$f ; date " >> $name
+		echo "date ; ./single_init.csh Dockerfile     wrf_regtest    > output_$f ; date " >> $name
 	endif
 	if      ( $BUILDS[$COUNT] == som ) then
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEO > outo & " >> $name
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
+		if ( $NUM == 002 ) then
+			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
+		else
+			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
+		endif
 		echo "cat SERIAL outs OPENMP outo MPI outm >> output_$f" >> $name
 		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outs outo outm " >> $name
@@ -72,18 +77,33 @@ foreach f ( $TEST_NUM )
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
+		if ( $NUM == 002 ) then
+			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
+		else
+			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
+		endif
 		echo "cat SERIAL outs MPI outm >> output_$f" >> $name
 		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outs outm " >> $name
 	else if ( $BUILDS[$COUNT] == s ) then
 		echo "./$NAMES > outs & " >> $name
 		echo "wait " >> $name
+		if ( $NUM == 002 ) then
+			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
+		else
+			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
+		endif
 		echo "cat SERIAL outs >> output_$f" >> $name
 		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outs " >> $name
 	else if ( $BUILDS[$COUNT] == m ) then
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
+		if ( $NUM == 002 ) then
+			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
+		else
+			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
+		endif
 		echo "cat MPI outm >> output_$f" >> $name
 		echo "date ; ./last_only_once.csh >> output_$f ; date" >> $name
 		echo "rm outm " >> $name
