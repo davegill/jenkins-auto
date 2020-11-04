@@ -1,5 +1,6 @@
 #!/bin/bash
 su - ubuntu << 'EOF'
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 858085030508.dkr.ecr.us-east-1.amazonaws.com
 wget https://wrf-testcase-staging.s3.amazonaws.com/my_script.sh
 mkdir /home/ubuntu/wrf-stuff
 cd wrf-stuff/
