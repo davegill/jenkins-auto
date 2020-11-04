@@ -4,7 +4,7 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 wget https://wrf-testcase-staging.s3.amazonaws.com/my_script.sh
 mkdir /home/ubuntu/wrf-stuff
 cd wrf-stuff/
-git clone git@github.com:davegill/wrf-coop.git
+git clone git@github.com:scala-computing/wrf-coop.git
 cd wrf-coop/
 sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed > Dockerfile
 sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed-NMM > Dockerfile-NMM
