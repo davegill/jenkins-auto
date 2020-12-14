@@ -20,7 +20,7 @@ foreach f ( $TEST_NUM )
 	echo "wget https://wrf-testcase.s3.amazonaws.com/my_script.sh" >> $name
 	echo "mkdir /home/ubuntu/wrf-stuff" >> $name
 	echo "cd wrf-stuff/" >> $name
-	echo "git clone git@github.com:davegill/wrf-coop.git" >> $name
+	echo "git clone https://github.com/davegill/wrf-coop.git" >> $name
 	echo "cd wrf-coop/" >> $name
 	echo 'sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed > Dockerfile' >> $name
 	echo 'sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed-NMM > Dockerfile-NMM' >> $name
