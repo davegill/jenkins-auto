@@ -34,7 +34,7 @@ P=sys.argv[22]
 
 AWS_REGION = "us-east-1"
 DAVID_GILL="hstone@scalacomputing.com"
-VIKRAM="vlakshmanan@scalacomputing.com"
+VIKRAM="varunlakshma@usf.edu"
 SCALA="ncar-dev@scalacomputing.com"
 f = open(FILE,"r")
 contents=f.read()
