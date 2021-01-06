@@ -156,23 +156,6 @@ if (BUILD_STATUS=="FAILURE"):
                 'Data':msg.as_string(),
             },
         )
-if (BUILD_STATUS=="ABORTED"):
-    msg_body = MIMEMultipart('alternative')
-    htmlpart = MIMEText(HTML_BODY_FAIL.encode(CHARSET), 'html', CHARSET)
-    msg_body.attach(htmlpart)
-    # Define the attachment part and encode it using MIMEApplication.
-    msg.attach(msg_body)
-    try:
-        #Provide the contents of the email.
-        response = client.send_raw_email(
-            Source=SENDER,
-            Destinations=[
-                RECIPIENT,DAVID_GILL,VIKRAM,SCALA
-            ],
-            RawMessage={
-                'Data':msg.as_string(),
-            },
-        )
     # Display an error if something goes wrong.
     except ClientError as e:
         print(e.response['Error']['Message'])
