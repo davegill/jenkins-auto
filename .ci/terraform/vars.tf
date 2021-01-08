@@ -8,7 +8,7 @@ variable "region" {
   default     = "us-east-1"
 }
 variable "volumesize" {
-  default = 25
+  default = 35
 }
 variable "devicename" {
   default = "/dev/sda1"
