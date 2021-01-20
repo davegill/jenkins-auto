@@ -8,7 +8,7 @@ variable "region" {
   default     = "us-east-1"
 }
 variable "volumesize" {
-  default = 25
+  default = 35
 }
 variable "devicename" {
   default = "/dev/sda1"
@@ -25,7 +25,7 @@ variable "instance_profile"            { default = "WRFS3Role" }
 variable "ami"                         { default = "ami-06e599aaf4015dafd" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
-variable "instance_type"               { default = "t3a.2xlarge" }
+variable "instance_type"               { default = "c5.4xlarge" }
 variable "key_name"                    { default = "jenkins" }
 variable "monitoring"                  { default = false  }
 variable "security_group_ids"          { default = ["sg-0dfbfc9d0b4b1b519"] }
