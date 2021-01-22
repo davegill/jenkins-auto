@@ -26,6 +26,7 @@ variable "ami"                         { default = "ami-06e599aaf4015dafd" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
 variable "instance_type"               { default = "t3a.2xlarge" }
+variable "instance_type_1"             { default = "c5.4xlarge" }
 variable "key_name"                    { default = "jenkins" }
 variable "monitoring"                  { default = false  }
 variable "security_group_ids"          { default = ["sg-0dfbfc9d0b4b1b519"] }
