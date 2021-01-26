@@ -22,7 +22,7 @@ resource "aws_instance" "application" {
                                   }
   availability_zone             = "${var.availability_zone}"
   ebs_optimized                 = "${var.ebs_optimized}"
-  instance_type                 = "${count.index > 1  && count.index >= 3 && count.index >= 4 && count.index <= 9 ? var.instance_type : var.instance_type_1}"
+  instance_type                 = "${count.index > 3 && count.index <= 9 ? var.instance_type : var.instance_type_1}"
   key_name                      = "${var.key_name}"
   monitoring                    = "${var.monitoring}"
   vpc_security_group_ids        = ["${var.security_group_ids}"]
