@@ -19,14 +19,14 @@ variable "devicename" {
 
 # EC2 variables
 //Run number of test case based on count value: "default = 18" means run all eighteen builds
-variable "instance_count" {default = 19 }
+variable "instance_count" {default = 1 }
 variable "instance_name"               { default = "wrf-test" }
 variable "instance_profile"            { default = "WRFS3Role" }
 variable "ami"                         { default = "ami-06e599aaf4015dafd" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
 variable "instance_type"               { default = "t3a.xlarge" }
-variable "instance_type_1"             { default = "c5.4xlarge" }
+variable "instance_type_1"             { default = "t3.medium" }
 variable "key_name"                    { default = "jenkins" }
 variable "monitoring"                  { default = false  }
 variable "security_group_ids"          { default = ["sg-0dfbfc9d0b4b1b519"] }
