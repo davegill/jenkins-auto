@@ -4,7 +4,7 @@ provider "aws" {
    }
 
 variable "hostnames" {
-   default = ["wrf_testcase_s1.sh", "wrf_testcase_o1.sh" ,"wrf_testcase_m1.sh" , "wrf_testcase_2.sh", "wrf_testcase_3.sh","wrf_testcase_4.sh","wrf_testcase_5.sh","wrf_testcase_6.sh","wrf_testcase_7.sh", "wrf_testcase_8.sh","wrf_testcase_9.sh","wrf_testcase_10.sh","wrf_testcase_11.sh","wrf_testcase_12.sh","wrf_testcase_13.sh","wrf_testcase_14.sh","wrf_testcase_15.sh","wrf_testcase_16.sh","wrf_testcase_17.sh","wrf_testcase_18.sh","wrf_testcase_19.sh"]
+   default = ["wrf_testcase_18.sh","wrf_testcase_s1.sh", "wrf_testcase_o1.sh" ,"wrf_testcase_m1.sh" , "wrf_testcase_2.sh", "wrf_testcase_3.sh","wrf_testcase_4.sh","wrf_testcase_5.sh","wrf_testcase_6.sh","wrf_testcase_7.sh", "wrf_testcase_8.sh","wrf_testcase_9.sh","wrf_testcase_10.sh","wrf_testcase_11.sh","wrf_testcase_12.sh","wrf_testcase_13.sh","wrf_testcase_14.sh","wrf_testcase_15.sh","wrf_testcase_16.sh","wrf_testcase_17.sh","wrf_testcase_19.sh"]
 }
 
 data "template_file" "user-data" {
