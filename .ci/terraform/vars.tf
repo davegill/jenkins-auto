@@ -22,7 +22,7 @@ variable "devicename" {
 variable "instance_count" {default = 1 }
 variable "instance_name"               { default = "wrf-test" }
 variable "instance_profile"            { default = "WRFS3Role" }
-variable "ami"                         { default = "ami-0a5ac5930c107c917" }
+variable "ami"                         { default = "ami-06e599aaf4015dafd" }
 variable "availability_zone"           { default = ""   }
 variable "ebs_optimized"               { default = false  }
 variable "instance_type"               { default = "t3a.large" }
