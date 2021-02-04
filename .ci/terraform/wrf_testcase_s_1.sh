@@ -29,7 +29,7 @@ echo openmp > outo
 echo mpi > outm
 wait 
 ./single_end.csh wrf_regtest    >> output_1 ; date 
-cat SERIAL outs OPENMP outo MPI outm >> output_s1
+cat SERIAL outs OPENMP outo MPI outm >> output_1
 date ; ./last_only_once.csh >> output_1 ; date
 rm outs outo outm
 rm SERIAL OPENMP MPI 
