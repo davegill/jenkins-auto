@@ -34,4 +34,3 @@ date ; ./last_only_once.csh >> output_1 ; date
 rm outs outo outm 
 rm SERIAL OPENMP MPI 
 EOF
-
