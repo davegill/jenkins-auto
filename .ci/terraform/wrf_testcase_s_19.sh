@@ -13,23 +13,13 @@ echo "==============================================================" >> SERIAL
 echo "                         SERIAL START" >> SERIAL
 echo "==============================================================" >> SERIAL
 
-echo "==============================================================" >  OPENMP
-echo "==============================================================" >> OPENMP
-echo "                         OPENMP START" >> OPENMP
-echo "==============================================================" >> OPENMP
-
-echo "==============================================================" >  MPI
-echo "==============================================================" >> MPI
-echo "                         MPI START" >> MPI
-echo "==============================================================" >> MPI
-
-date ; ./single_init.csh Dockerfile     wrf_regtest    > output_19 ; date 
+date ; ./single_init.csh Dockerfile     wrf_regtest    > output_s_19 ; date 
 ./test_019s.csh > outs & 
 
 wait 
-./single_end.csh wrf_regtest    >> output_19 ; date 
-cat SERIAL outs >> output_19
-date ; ./last_only_once.csh >> output_19 ; date
+./single_end.csh wrf_regtest    >> output_s_19 ; date 
+cat SERIAL outs >> output_s_19
+date ; 
 rm outs
 rm SERIAL OPENMP MPI 
 EOF
