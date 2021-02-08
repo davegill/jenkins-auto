@@ -20,7 +20,7 @@ echo mpi > outm
 wait 
 ./single_end.csh wrf_regtest    >> output_s_1 ; date 
 cat SERIAL outs  >> output_s_1
-date ; .
+
 rm outs 
 rm SERIAL OPENMP MPI 
 EOF
