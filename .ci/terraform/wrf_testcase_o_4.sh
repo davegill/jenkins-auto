@@ -16,11 +16,11 @@ echo "==============================================================" >> OPENMP
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_4 ; date 
 
-./test_004o.csh > outo &
+./test_004.csh > outo &
 wait 
 ./single_end.csh wrf_regtest    >> output_4 ; date 
 cat OPENMP outo >> output_4
-date ; ./last_only_once.csh >> output_4 ; date
+
 rm outo
 rm SERIAL OPENMP MPI 
 EOF
