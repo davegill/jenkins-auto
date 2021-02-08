@@ -15,8 +15,7 @@ echo "==============================================================" >> SERIAL
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_s_1 ; date 
 ./test_001s.csh > outs &
-echo openmp > outo
-echo mpi > outm
+
 wait 
 ./single_end.csh wrf_regtest    >> output_s_1 ; date 
 cat SERIAL outs  >> output_s_1
