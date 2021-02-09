@@ -13,12 +13,12 @@ echo "==============================================================" >> SERIAL
 echo "                         SERIAL START" >> SERIAL
 echo "==============================================================" >> SERIAL
 
-date ; ./single_init.csh Dockerfile     wrf_regtest    > outputs_14 ; date 
-./test_014s.csh > outs & 
+date ; ./single_init.csh Dockerfile     wrf_regtest    > outputa_4 ; date 
+./test_004s.csh > outs &
 
 wait 
-./single_end.csh wrf_regtest    >> outputs_14 ; date 
-cat SERIAL outs >> outputs_14
+./single_end.csh wrf_regtest    >> outputa_4 ; date 
+cat SERIAL outs >> outputa_4
 
 rm outs 
 rm SERIAL OPENMP MPI 
