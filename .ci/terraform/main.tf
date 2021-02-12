@@ -14,7 +14,7 @@ provider "aws" {
 # }
 
 variable "hostnames"{
-   default = ["wrf_testcase_23.sh","wrf_testcase_24.sh","wrf_testcase_25.sh"]
+   default = ["wrf_testcase_24.sh","wrf_testcase_25.sh"]
 }
 
 data "template_file" "user-data" {
