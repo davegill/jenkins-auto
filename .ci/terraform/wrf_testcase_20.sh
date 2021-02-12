@@ -1,6 +1,6 @@
 #!/bin/bash
 su - ubuntu << 'EOF'
-wget https://wrf-testcase-staging.s3.amazonaws.com/upload_script.sh
+wget https://wrf-testcase-staging.s3.amazonaws.com/my_script.sh
 mkdir /home/ubuntu/wrf-stuff
 cd wrf-stuff/
 git clone --branch leave_docker_images https://github.com/scala-computing/wrf-coop.git
