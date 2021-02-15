@@ -14,14 +14,15 @@ echo "==============================================================" >  SERIAL
 echo "==============================================================" >> SERIAL
 echo "                         SERIAL START" >> SERIAL
 echo "==============================================================" >> SERIAL
-
+echo "$1 is ${1}"
+echo "$2 is ${2}"
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_20 ; date 
 ./test_001s.csh > outs &
 
 wait 
 ./single_end.csh wrf_regtest    >> output_20 ; date 
 cat SERIAL outs  >> output_20
-zip -r "OUTPUT_20".zip /home/ubuntu/wrf-stuff/wrf-coop/OUTPUT 
+
 rm outs 
 rm SERIAL OPENMP MPI 
 EOF
