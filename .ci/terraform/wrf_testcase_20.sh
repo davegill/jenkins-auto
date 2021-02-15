@@ -14,8 +14,6 @@ echo "==============================================================" >  SERIAL
 echo "==============================================================" >> SERIAL
 echo "                         SERIAL START" >> SERIAL
 echo "==============================================================" >> SERIAL
-echo "$1 is ${1}"
-echo "$2 is ${2}"
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_20 ; date 
 ./test_001s.csh > outs &
 
