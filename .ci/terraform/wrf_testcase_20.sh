@@ -21,7 +21,7 @@ date ; ./single_init.csh Dockerfile     wrf_regtest    > output_20 ; date
 wait 
 ./single_end.csh wrf_regtest    >> output_20 ; date 
 cat SERIAL outs  >> output_20
-
+zip -r "OUTPUT_20".zip /home/ubuntu/wrf-stuff/wrf-coop/OUTPUT 
 rm outs 
 rm SERIAL OPENMP MPI 
 EOF
