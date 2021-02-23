@@ -3,7 +3,7 @@ su - ubuntu << 'EOF'
 wget https://wrf-testcase-staging.s3.amazonaws.com/upload_script.sh
 mkdir /home/ubuntu/wrf-stuff
 cd wrf-stuff/
-git clone --branch leave_docker_images https://github.com/scala-computing/wrf-coop.git
+git clone --branch varun_test https://github.com/davegill/wrf-coop.git
 cd wrf-coop/
 echo $GIT_URL
 echo The git url is $GIT_URL
