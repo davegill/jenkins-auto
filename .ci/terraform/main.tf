@@ -34,9 +34,7 @@ resource "aws_instance" "application" {
   instance_type                 = "${count.index == 3  ? var.instance_type_1 : var.instance_type}"
   key_name                      = "${var.key_name}"
   monitoring                    = "${var.monitoring}"
-  vpc_security_group_ids        = [
-     var.security_group_ids,
-   ]
+  vpc_security_group_ids        = var.security_group_ids
   subnet_id                     = "${var.subnet_id}"
   associate_public_ip_address   = "${var.associate_public_ip_address}"
   user_data                     = "${element(data.template_file.user-data.*.rendered, count.index)}"
