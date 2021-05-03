@@ -1,6 +1,6 @@
 provider "aws" {
-   region     = "${var.region}"
-   profile    = "${var.aws_profile}" #.aws/credentials
+   region     = var.region
+   profile    = var.aws_profile #.aws/credentials
    }
 
 # variable "hostnames" {
@@ -24,10 +24,10 @@ resource "aws_instance" "application" {
   count                         = "${var.instance_count}"
   ami                           = "${var.ami}"
   iam_instance_profile          = "${var.instance_profile}"
-  ebs_block_device              = {
-     device_name = "${var.devicename}" 
-     volume_size = "${var.volumesize}"
-                                  }
+  ebs_block_device{ 
+      device_name = var.devicename 
+      volume_size = var.volumesize
+   }
   availability_zone             = "${var.availability_zone}"
   ebs_optimized                 = "${var.ebs_optimized}"
 #   instance_type                 = "${var.instance_type_1}"
