@@ -5,6 +5,7 @@
 set TEST_NUM = (  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 )
 set BUILDS   = ( som sm  som som som som  m  som  s  som som som som som som som sm  sm  m  )
 
+# wrf_testcase_19.sh has been deleted, this is the NMM test. Terraform also has been updated to run only 17 tests (18 If KPP is required). IF 'NMM' TEST i.e. Test 19 NEEDS TO BE RUN THEN TERRAFORM NEEDS TO BE UPDATED AND THIS SCRIPT NEEDS TO BE RUN AGAIN TO GENERATE wrf_testcase_19.sh
 
 set COUNT = 1
 foreach f ( $TEST_NUM )
