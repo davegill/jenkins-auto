@@ -25,10 +25,12 @@ echo "==============================================================" >> MPI
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_10 ; date 
 ./test_010s.csh > outs & 
+./test_010o.csh > outo & 
+./test_010m.csh > outm & 
 wait 
 ./single_end.csh wrf_regtest    >> output_10 ; date 
-cat SERIAL outs >> output_10
+cat SERIAL outs OPENMP outo MPI outm >> output_10
 date ; ./last_only_once.csh >> output_10 ; date
-rm outs 
+rm outs outo outm 
 rm SERIAL OPENMP MPI 
 EOF
