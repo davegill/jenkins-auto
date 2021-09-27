@@ -8,18 +8,20 @@ cd wrf-coop/
 sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed > Dockerfile
 sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed-NMM > Dockerfile-NMM
 csh build.csh /home/ubuntu/wrf-stuff/wrf-coop /home/ubuntu/wrf-stuff/wrf-coop
-echo "==============================================================" >  SERIAL
-echo "==============================================================" >> SERIAL
-echo "                         SERIAL START" >> SERIAL
-echo "==============================================================" >> SERIAL
 
-date ; ./single_init.csh Dockerfile     wrf_regtest    > output_61 ; date 
-./test_017s.csh > outs & 
+echo "==============================================================" >  OPENMP
+echo "==============================================================" >> OPENMP
+echo "                         OPENMP START" >> OPENMP
+echo "==============================================================" >> OPENMP
+
+date ; ./single_init.csh Dockerfile     wrf_regtest    > output_62 ; date 
+
+./test_017o.csh > outo & 
 
 wait 
-./single_end.csh wrf_regtest    >> output_61 ; date 
-cat SERIAL outs >> output_61
+./single_end.csh wrf_regtest    >> output_62 ; date 
+cat OPENMP outo >> output_62
 
-rm outs
+rm outo
 rm SERIAL OPENMP MPI 
 EOF

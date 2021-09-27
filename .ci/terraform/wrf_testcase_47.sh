@@ -9,19 +9,18 @@ sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed >
 sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed-NMM > Dockerfile-NMM
 csh build.csh /home/ubuntu/wrf-stuff/wrf-coop /home/ubuntu/wrf-stuff/wrf-coop
 
-echo "==============================================================" >  OPENMP
-echo "==============================================================" >> OPENMP
-echo "                         OPENMP START" >> OPENMP
-echo "==============================================================" >> OPENMP
+echo "==============================================================" >  MPI
+echo "==============================================================" >> MPI
+echo "                         MPI START" >> MPI
+echo "==============================================================" >> MPI
 
-date ; ./single_init.csh Dockerfile     wrf_regtest    > output_47 ; date 
+date ; ./single_init.csh Dockerfile     wrf_regtest    > output_48 ; date 
 
-./test_012o.csh > outo & 
-
+./test_012m.csh > outm & 
 wait 
-./single_end.csh wrf_regtest    >> output_47 ; date 
-cat OPENMP outo >> output_47
-
-rm outo
+./single_end.csh wrf_regtest    >> output_48 ; date 
+cat MPI outm >> output_48
+ 
+rm outm 
 rm SERIAL OPENMP MPI 
 EOF
