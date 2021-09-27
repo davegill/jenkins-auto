@@ -2,8 +2,8 @@
 
 #	This script makes the wrf_testcase_xx.sh files.
 
-set TEST_NUM = (  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45  )
-set BUILDS   = ( som  m  sm  som som som som  m  som  s  som som som som som som som sm  sm  s  o  m  m  s  m  s  o  m  s  o  m  s  o  m  s  o  m  m  s  o  m  s  s  o m )
+set TEST_NUM = (  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  )
+set BUILDS   = ( som  sm  som som som som  m  som  s  som som som som som som som sm  sm )
 
 
 set COUNT = 1
@@ -55,7 +55,7 @@ foreach f ( $TEST_NUM )
 	set NAMES = ${BASE}s.csh
 	set NAMEO = ${BASE}o.csh
 	set NAMEM = ${BASE}m.csh
-	if ( $NUM == 002 ) then
+	if ( $NUM == 019 ) then
 		echo "date ; ./single_init.csh Dockerfile-NMM wrf_nmmregtest > output_$f ; date " >> $name
 	else
 		echo "date ; ./single_init.csh Dockerfile     wrf_regtest    > output_$f ; date " >> $name
@@ -65,7 +65,7 @@ foreach f ( $TEST_NUM )
 		echo "./$NAMEO > outo & " >> $name
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
-		if ( $NUM == 002 ) then
+		if ( $NUM == 019 ) then
 			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
 		else
 			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
@@ -77,7 +77,7 @@ foreach f ( $TEST_NUM )
 		echo "./$NAMES > outs & " >> $name
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
-		if ( $NUM == 002 ) then
+		if ( $NUM == 019 ) then
 			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
 		else
 			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
@@ -88,7 +88,7 @@ foreach f ( $TEST_NUM )
 	else if ( $BUILDS[$COUNT] == s ) then
 		echo "./$NAMES > outs & " >> $name
 		echo "wait " >> $name
-		if ( $NUM == 002 ) then
+		if ( $NUM == 019 ) then
 			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
 		else
 			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
@@ -99,7 +99,7 @@ foreach f ( $TEST_NUM )
 	else if ( $BUILDS[$COUNT] == m ) then
 		echo "./$NAMEM > outm & " >> $name
 		echo "wait " >> $name
-		if ( $NUM == 002 ) then
+		if ( $NUM == 019 ) then
 			echo "./single_end.csh wrf_nmmregtest >> output_$f ; date " >> $name
 		else
 			echo "./single_end.csh wrf_regtest    >> output_$f ; date " >> $name
