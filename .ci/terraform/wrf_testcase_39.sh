@@ -14,13 +14,13 @@ echo "==============================================================" >> OPENMP
 echo "                         OPENMP START" >> OPENMP
 echo "==============================================================" >> OPENMP
 
-date ; ./single_init.csh Dockerfile     wrf_regtest    > output_40 ; date 
+date ; ./single_init.csh Dockerfile     wrf_regtest    > output_39 ; date 
 
 ./test_009o.csh > outo & 
 
 wait 
-./single_end.csh wrf_regtest    >> output_40 ; date 
-cat OPENMP outo >> output_40
+./single_end.csh wrf_regtest    >> output_39 ; date 
+cat OPENMP outo >> output_39
 
 rm outo 
 rm SERIAL OPENMP MPI 
