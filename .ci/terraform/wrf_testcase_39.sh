@@ -16,7 +16,7 @@ echo "==============================================================" >> OPENMP
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_39 ; date 
 
-./test_009o.csh > outo & 
+./test_008o.csh > outo & 
 
 wait 
 ./single_end.csh wrf_regtest    >> output_39 ; date 

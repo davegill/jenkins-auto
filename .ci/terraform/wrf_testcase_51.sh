@@ -14,7 +14,7 @@ echo "                         SERIAL START" >> SERIAL
 echo "==============================================================" >> SERIAL
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_51 ; date 
-./test_014s.csh > outs & 
+./test_013s.csh > outs & 
 
 wait 
 ./single_end.csh wrf_regtest    >> output_51 ; date 

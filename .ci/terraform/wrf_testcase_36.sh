@@ -16,7 +16,7 @@ echo "==============================================================" >> MPI
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_36 ; date 
 
-./test_007m.csh > outm & 
+./test_006m.csh > outm & 
 wait 
 ./single_end.csh wrf_regtest    >> output_36 ; date 
 cat MPI outm >> output_36
