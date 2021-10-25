@@ -32,7 +32,7 @@ resource "aws_instance" "application" {
   ebs_optimized                 = "${var.ebs_optimized}"
 #   instance_type                 = "${var.instance_type}"
 #   instance_type                 = "${var.instance_type_1}"
-# "${count.index >= 3 && count.index <= 5 ? var.instance_type_1 : var.instance_type}"
+#   instance_type                 = "${count.index >= 3 && count.index <= 5 ? var.instance_type_1 : var.instance_type}"
 instance_type                 = "${count.index <= 1  ? var.instance_type_1 : var.instance_type}"
   key_name                      = "${var.key_name}"
   monitoring                    = "${var.monitoring}"
