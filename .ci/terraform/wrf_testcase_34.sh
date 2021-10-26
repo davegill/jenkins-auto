@@ -1,25 +1,21 @@
 #!/bin/bash
 su - ubuntu << 'EOF'
-wget https://wrf-testcase-staging.s3.amazonaws.com/upload_script.sh
+wget https://wrf-testcase.s3.amazonaws.com/my_script.sh
 mkdir /home/ubuntu/wrf-stuff
 cd wrf-stuff/
-git clone --branch leave_docker_images https://github.com/davegill/wrf-coop.git
+git clone --branch regression+feature https://github.com/davegill/wrf-coop.git
 cd wrf-coop/
 sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed > Dockerfile
-sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed-NMM > Dockerfile-NMM
 csh build.csh /home/ubuntu/wrf-stuff/wrf-coop /home/ubuntu/wrf-stuff/wrf-coop
-echo "==============================================================" >  SERIAL
-echo "==============================================================" >> SERIAL
-echo "                         SERIAL START" >> SERIAL
-echo "==============================================================" >> SERIAL
+echo "==============================================================" >  OPENMP
+echo "==============================================================" >> OPENMP
+echo "                         OPENMP START" >> OPENMP
+echo "==============================================================" >> OPENMP
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_34 ; date 
-./test_006s.csh > outs & 
-
-wait 
+./test_014o.csh > outo 
 ./single_end.csh wrf_regtest    >> output_34 ; date 
-cat SERIAL outs >> output_34
- 
-rm outs
-rm SERIAL OPENMP MPI 
+cat OPENMP outo >> output_34
+rm outo OPENMP 
+date 
 EOF
