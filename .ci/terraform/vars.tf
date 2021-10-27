@@ -19,7 +19,7 @@ variable "devicename" {
 
 # EC2 variables
 //Run number of test case based on count value: "default = 58" means run all builds except KPP
-variable "instance_count" {default =58 }
+variable "instance_count" {default =1 }
 variable "instance_name"               { default = "wrf-test" }
 variable "instance_profile"            { default = "WRFS3Role" }
 
