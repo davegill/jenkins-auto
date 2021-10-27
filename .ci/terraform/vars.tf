@@ -19,7 +19,7 @@ variable "devicename" {
 
 # EC2 variables
 //Run number of test case based on count value: "default = 18" means run all eighteen builds
-variable "instance_count" {default = 45 }
+variable "instance_count" {default =60 }
 variable "instance_name"               { default = "wrf-test" }
 variable "instance_profile"            { default = "WRFS3Role" }
 
