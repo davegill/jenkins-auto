@@ -49,7 +49,7 @@ foreach COUNT ( $TEST_NUM )
 			
 		echo '#\!/bin/bash' >> $name
 		echo "su - ubuntu << 'EOF'" >> $name
-		echo "wget https://wrf-testcase.s3.amazonaws.com/my_script.sh" >> $name
+		echo "wget https://wrf-testcase-staging.s3.amazonaws.com/upload_script.sh" >> $name
 		echo "mkdir /home/ubuntu/wrf-stuff" >> $name
 		echo "cd wrf-stuff/" >> $name
 		echo "git clone --branch regression+feature https://github.com/davegill/wrf-coop.git" >> $name
