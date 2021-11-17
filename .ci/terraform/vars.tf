@@ -20,7 +20,7 @@ variable "devicename" {
 # EC2 variables
 //Run number of test case based on count value: "default = 58" means run all builds except KPP
 #DAVE - If this is set to "1", then only wrf_testcase_1.sh is run
-variable "instance_count" {default =58 }
+variable "instance_count" {default =59 }
 variable "instance_name"               { default = "wrf-test" }
 variable "instance_profile"            { default = "WRFS3Role" }
 
