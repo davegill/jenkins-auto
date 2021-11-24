@@ -2,9 +2,10 @@
 
 #	This script makes the wrf_testcase_xx.sh files.
 
-#               chm rst  rl  qss bw  rl8 qs8 mov fir hil rl  rl  rl  rl  rl  rl  rl  rl  rl  rl  rl  rl  kpp 
+#               chm rst  rl  rl  rl  rl  rl  qss bw  rl8 qs8 mov fir hil rl  rl  rl  rl  rl  rl  rl  rl  kpp 
+set OLD_NUM  = (  1   2  11  13  21  22   3   4   5   6   7   8   9  10  12  14  15  16  17  18  19  20  23 )
 set TEST_NUM = (  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23 )
-set BUILDS   = ( sm   m  som som som som som  m  som s   som som som som som som som sm  som som som som sm )
+set BUILDS   = ( sm   m  som som som som som som som som som  m  som s   som som som som som sm  som som sm )
 
 set ALL   = 0
 foreach COUNT ( $TEST_NUM )
@@ -89,11 +90,11 @@ foreach COUNT ( $TEST_NUM )
 			set NUM =   $ALL
 		endif
 	
-		if      ( $ALL <   10 ) then
+		if      ( $COUNT <   10 ) then
 			set BASE = test_00$COUNT
-		else if ( $ALL <  100 ) then
+		else if ( $COUNT <  100 ) then
 			set BASE = test_0$COUNT
-		else if ( $ALL < 1000 ) then
+		else if ( $COUNT < 1000 ) then
 			set BASE = test_$COUNT
 		endif
 		set NAMES = ${BASE}s.csh

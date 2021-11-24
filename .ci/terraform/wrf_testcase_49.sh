@@ -7,15 +7,15 @@ git clone --branch regression+feature https://github.com/davegill/wrf-coop.git
 cd wrf-coop/
 sed -e "s^_GIT_URL_^$GIT_URL^" -e "s^_GIT_BRANCH_^$GIT_BRANCH^" Dockerfile-sed > Dockerfile
 csh build.csh /home/ubuntu/wrf-stuff/wrf-coop /home/ubuntu/wrf-stuff/wrf-coop
-echo "==============================================================" >  MPI
-echo "==============================================================" >> MPI
-echo "                         MPI START" >> MPI
-echo "==============================================================" >> MPI
+echo "==============================================================" >  OPENMP
+echo "==============================================================" >> OPENMP
+echo "                         OPENMP START" >> OPENMP
+echo "==============================================================" >> OPENMP
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_49 ; date 
-./test_019m.csh > outm 
+./test_019o.csh > outo 
 ./single_end.csh wrf_regtest    >> output_49 ; date 
-cat MPI outm >> output_49
-rm outm MPI 
+cat OPENMP outo >> output_49
+rm outo OPENMP 
 date 
 EOF

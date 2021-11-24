@@ -13,7 +13,7 @@ echo "                         OPENMP START" >> OPENMP
 echo "==============================================================" >> OPENMP
 
 date ; ./single_init.csh Dockerfile     wrf_regtest    > output_11 ; date 
-./test_05o.csh > outo 
+./test_005o.csh > outo 
 ./single_end.csh wrf_regtest    >> output_11 ; date 
 cat OPENMP outo >> output_11
 rm outo OPENMP 
