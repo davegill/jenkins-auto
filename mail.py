@@ -33,7 +33,7 @@ O=sys.argv[21]
 P=sys.argv[22]
 
 AWS_REGION = "us-east-1"
-DAVID_GILL="hstone@scalacomputing.com"
+DAVID_GILL="gill@ucar.edu"
 #VIKRAM="varunlakshma@usf.edu"
 VIKRAM="vlakshmanan@scalacomputing.com"
 SCALA="ncar-dev@scalacomputing.com"
