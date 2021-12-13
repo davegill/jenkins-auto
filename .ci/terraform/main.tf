@@ -27,7 +27,8 @@ resource "aws_instance" "application" {
 #   instance_type                 = "${var.instance_type}"
 #   instance_type                 = "${var.instance_type_1}"
 #   instance_type                 = "${count.index >= 3 && count.index <= 5 ? var.instance_type_1 : var.instance_type}"
-  instance_type                 = "${count.index <= 15  ? var.instance_type_1 : var.instance_type}"
+#   instance_type                 = "${count.index <= 15  ? var.instance_type_1 : var.instance_type}"
+  instance_type                 = "${count.index <= 3  ? var.instance_type_1 : var.instance_type}"
   key_name                      = "${var.key_name}"
   monitoring                    = "${var.monitoring}"
   vpc_security_group_ids        = var.security_group_ids
