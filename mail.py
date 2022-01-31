@@ -51,7 +51,7 @@ if (I=="0") and (J=="0"):
     <head></head>
     <body>
     <p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {0}, requested by: {1} for PR: https://github.com/scala-computing/WRF/pull/{2}.
-            For any query please send e-mail to <a href="mailto:kkeene@ucar.edu">David Gill. </a></p>
+            For any query please send e-mail to <a href="mailto:kkeene@ucar.edu">Kelly Werner. </a></p>
     <pre>
     Test Type              | Expected  | Received |  Failed
     = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
@@ -75,7 +75,7 @@ else :
     <head></head>
     <body>
     <p>Please find result of the WRF regression test cases in the attachment.  This build is for Commit ID: {0}, requested by: {1} for PR: https://github.com/scala-computing/WRF/pull/{2}.
-            For any query please send e-mail to <a href="mailto:kkeene@ucar.edu">David Gill. </a></p>
+            For any query please send e-mail to <a href="mailto:kkeene@ucar.edu">Kelly Werner. </a></p>
     <pre>
     Test Type              | Expected  | Received |  Failed
     = = = = = = = = = = = = = = = = = = = = = = = =  = = = =
@@ -99,7 +99,7 @@ HTML_BODY_FAIL="""
 <body>
   <h1>{}: {}-BUILD-{}</h1>
  <p>This WRF-Model build has {}. This build is for Commit ID: {}, requested by: {} for PR: https://github.com/scala-computing/WRF/pull/{}.
-    For any query please send e-mail to <a href="mailto:kkeene@ucar.edu">David Gill</a></p>
+    For any query please send e-mail to <a href="mailto:kkeene@ucar.edu">Kelly Werner</a></p>
 </body>
 </html>""".format(BUILD_STATUS,JOB_NAME,BUILD_NUMBER,BUILD_STATUS,COMMIT_ID,REQUESTOR,PULLNUMBER)
 
